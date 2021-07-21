@@ -25,7 +25,7 @@ const getWeather = async (city) => {
       }
 
       let response = await axios.get(cityEndpoint(city));
-      redis.set(`weather:${city}`, JSON.stringify(response.data));
+      redis.set(`weather:${city}`, JSON.stringify(response.data), 'EX', 1800);
       return {...response.data, 'source' : 'API' };
     } catch (error) {
       console.error(error)
